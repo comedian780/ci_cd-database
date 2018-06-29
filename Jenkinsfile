@@ -5,7 +5,7 @@ node {
 
    }
      stage('Build') { // for display purposes
-      
+
       if (isUnix()) {
           /* build docker image */
           IMAGE_EXISTS = sh(
@@ -13,26 +13,25 @@ node {
             returnStatus : true)
           /* Remove the previous build image */
           if(IMAGE_EXISTS!=""){
-            sh 'docker rmi -f "193.174.205.28:443/parcel-db"'
+            sh 'docker rmi -f "asset.allgaeu-parcel-service.com:443/parcel-db"'
           }
-          sh 'docker build -t "193.174.205.28:443/parcel-db" .'
+          sh 'docker build -t "asset.allgaeu-parcel-service.com:443/parcel-db" .'
           sh 'docker image prune -f'
 
       } else {
           /* build docker image */
 
-          bat 'docker rmi -f 193.174.205.28:443/parcel-db'
-          bat 'docker build -t 193.174.205.28:443/parcel-db .'
+          bat 'docker rmi -f asset.allgaeu-parcel-service.com:443/parcel-db'
+          bat 'docker build -t asset.allgaeu-parcel-service.com:443/parcel-db .'
           bat 'docker image prune -f'
       }
 
    }
    stage('Deploy to registry'){
     if (isUnix()) {
-      sh 'docker push "193.174.205.28:443/parcel-db"'
+      sh 'docker push "asset.allgaeu-parcel-service.com:443/parcel-db"'
     } else {
-      bat 'docker push "193.174.205.28:443/parcel-db"'
+      bat 'docker push "asset.allgaeu-parcel-service.com:443/parcel-db"'
     }
    }
   }
-
